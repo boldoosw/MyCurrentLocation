@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -41,13 +42,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     Manifest.permission.ACCESS_FINE_LOCATION
             },100);
         }
+        getLocation();
 
 
         button_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //create method
-                getLocation();
+//                getLocation();
             }
         });
 
@@ -59,8 +61,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private void getLocation() {
 
         try {
-            locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,5,MainActivity.this);
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0, 0, this);
 
         }catch (Exception e){
             e.printStackTrace();
